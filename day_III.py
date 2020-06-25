@@ -61,3 +61,32 @@ class Solution:
         #assuming both lists aren't empty, return the first node in the final list
         if len(final_node_list) > 0:
             return final_node_list[0]
+
+
+class Solution:
+    def decodeString(self, s: str) -> str:
+        #convert the string to a list of characters
+        chars = list(s)
+        stack = []
+        openers = []
+
+        for i in range(len(chars)):
+            stack.append(chars[i])
+
+            if chars[i] == '[':
+                openers.append(i)
+            if chars[i] == ']':
+                substring = ""
+                closing = stack.pop()
+                while len(stack) > openers[-1] + 1:
+                    substring = stack.pop() + substring
+                #opening bracket
+                stack.pop()
+                openers.pop()
+                multiplier = stack[-1]
+                substring = int(multiplier) * substring
+                sub_list = list(substring)
+                stack = [*stack, *sub_list]
+
+        print(stack)
+
